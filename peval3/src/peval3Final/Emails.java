@@ -79,7 +79,7 @@ public class Emails extends JFrame {
 		panel.add(lblDe);
 
 		txt_origen = new JTextField();
-		txt_origen.setBounds(130, 5, 351, 20);
+		txt_origen.setBounds(130, 5, 395, 20);
 		panel.add(txt_origen);
 		txt_origen.setColumns(10);
 
@@ -88,7 +88,7 @@ public class Emails extends JFrame {
 		panel.add(lblAsunto_1);
 
 		txt_Asunto = new JTextField();
-		txt_Asunto.setBounds(130, 48, 351, 20);
+		txt_Asunto.setBounds(130, 48, 395, 20);
 		panel.add(txt_Asunto);
 		txt_Asunto.setColumns(10);
 
@@ -97,7 +97,7 @@ public class Emails extends JFrame {
 		panel.add(lblMensaje_1);
 
 		JScrollPane scrollPane_1 = new JScrollPane();
-		scrollPane_1.setBounds(130, 93, 351, 332);
+		scrollPane_1.setBounds(130, 93, 395, 332);
 		panel.add(scrollPane_1);
 
 		txt_mensaje = new JTextArea();
@@ -112,7 +112,7 @@ public class Emails extends JFrame {
 				Emails.super.dispose();
 			}
 		});
-		btnVolverAPrincipal.setBounds(535, 319, 190, 61);
+		btnVolverAPrincipal.setBounds(558, 258, 167, 76);
 		panel.add(btnVolverAPrincipal);
 		mostrarMensajes();
 		btnAtras = new JButton("<<");

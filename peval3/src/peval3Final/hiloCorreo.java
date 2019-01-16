@@ -29,12 +29,7 @@ public class hiloCorreo extends Thread {
 			try {
 				Message[] msg = Correo.recibirDatos();
 				Emails.lblMensajes.setText("Hay un total de " + String.valueOf(msg.length) + " mensajes");
-				/*
-				 * HAY QUE TENER CUIDADO CON EL ENVIO DE MENSAJES,ES DECIR,SI ESCRIBES UN
-				 * MENSAJE DE SALUDO A UNA PERSONA PREGUNTADOLE COMO ESTA , GOOGLE DIRECTAMENTE
-				 * TE DA UNA BOTONERA CON OPCIONES Y AL SER ESO HTML NO ESTA IMPLEMENTADO EN EL
-				 * PROGRAMA Y ESTARÁ A LA ESPERA DE PODER LEER HTML
-				 */
+				
 				for (int i = 0, n = msg.length; i < n; i++) {
 					Message mensaje = msg[i];
 					Emails.listaDatos.add(new datosCorreo(mensaje));
@@ -47,13 +42,14 @@ public class hiloCorreo extends Thread {
 						"ERROR", JOptionPane.ERROR_MESSAGE);
 				System.exit(0);
 			}
-//			try {
-//				Thread.sleep(3000);
-//				Emails.listaDatos.clear();
-//			} catch (InterruptedException e) {
-//				// TODO Auto-generated catch block
-//				System.out.println(e.getMessage());
-//			}
+			try {
+				Thread.sleep(50000);
+				Emails.listaDatos.clear();
+				Emails.contador = 0;
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				System.out.println(e.getMessage());
+			}
 		}
 	}
 
@@ -81,11 +77,7 @@ public class hiloCorreo extends Thread {
 						Emails.txt_origen.setText(Emails.listaDatos.get(Emails.contador).getOrigen());
 						Emails.txt_Asunto.setText(Emails.listaDatos.get(Emails.contador).getAsunto());
 						Emails.txt_mensaje.setText(Emails.listaDatos.get(Emails.contador).getMensaje());
-					} catch (Exception e1) {
-						JOptionPane.showMessageDialog(null, "Error en el intento de leer mensajes", "ERROR",
-								JOptionPane.ERROR_MESSAGE);
-						System.exit(0);
-					}
+					} catch (Exception e1) {}
 				}
 			});
 			Emails.btnAdelante.addActionListener(new ActionListener() {
@@ -96,17 +88,11 @@ public class hiloCorreo extends Thread {
 						Emails.txt_origen.setText(Emails.listaDatos.get(Emails.contador).getOrigen());
 						Emails.txt_Asunto.setText(Emails.listaDatos.get(Emails.contador).getAsunto());
 						Emails.txt_mensaje.setText(Emails.listaDatos.get(Emails.contador).getMensaje());
-					} catch (Exception e1) {
-						JOptionPane.showMessageDialog(null, "No hay mas mensajes", "ERROR", JOptionPane.ERROR_MESSAGE);
-						System.exit(0);
-					}
+					} catch (Exception e1) {}
 
 				}
 			});
-		} catch (Exception e) {
-			JOptionPane.showMessageDialog(null, "No existen mensajes", "ERROR", JOptionPane.ERROR_MESSAGE);
-			System.exit(0);
-		}
+		} catch (Exception e) {}
 
 	}
 }
