@@ -1,61 +1,112 @@
-package peval3Final;
+package peval3;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.mail.Message;
 import javax.swing.JOptionPane;
 
 public class hiloCorreo extends Thread {
 
-    /**
-     * Esta es la clase hilo,tiene un bucle infinito de manera que estar√°
-     * siempre a la escucha. Se crea un Array de Message dado que el metodo
-     * recibirDatos de la clase Correo devuelve ese mismo Array. Se crea un for
-     * para poder recorrer todos los mensajes que existen y a√±adirlos en un
-     * ArrayList de la clase objeto datosCorreo. Se crea un sleep para el hilo
-     * de forma que cada cierto tiempo se duerma,b√°sicamente es por que tenga
-     * cierta similitud al correo de gmail,recibes correo cada x tiempo. Se
-     * llama al ArrayList para poder limpiar y borrar todos los datos,se hace
-     * esta llamada ya que al estar recibiendo todos los correos volver√≠a a
-     * a√±adir al ArrayList los correos antiguos y los nuevos
-     *
-     * @see datosCorreo
-     * @see Correo
-     */
-    public void run() {
-        while (true) {
-            try {
-                Message[] msg = Correo.recibirDatos();
-                Emails.lblMensajes.setText("Hay un total de " + String.valueOf(msg.length) + " mensajes");
-                /*
-                 * HAY QUE TENER CUIDADO CON EL ENVIO DE MENSAJES,ES DECIR,SI ESCRIBES UN
-                 * MENSAJE DE SALUDO A UNA PERSONA PREGUNTADOLE COMO ESTA , GOOGLE DIRECTAMENTE
-                 * TE DA UNA BOTONERA CON OPCIONES Y AL SER ESO HTML NO ESTA IMPLEMENTADO EN EL
-                 * PROGRAMA Y ESTAR√Å A LA ESPERA DE PODER LEER HTML
-                 */
-                for (int i = 0, n = msg.length; i < n; i++) {
-                    Message mensaje = msg[i];
-                    System.out.println("---------------------------------");
-                    System.out.println("Email Number " + (i + 1));
-                    System.out.println("Asunto: " + mensaje.getSubject());
-                    System.out.println("Origen: " + mensaje.getFrom()[0]);
-                    Emails.listaDatos.add(new datosCorreo(mensaje));
-                    System.out.println(Emails.listaDatos.size());
-                }
+	/**
+	 * Esta es la clase hilo,tiene un bucle infinito de manera que estar· siempre a
+	 * la escucha. Se crea un Array de Message dado que el metodo recibirDatos de la
+	 * clase Correo devuelve ese mismo Array. Se crea un for para poder recorrer
+	 * todos los mensajes que existen y aÒadirlos en un ArrayList de la clase objeto
+	 * datosCorreo. Se crea un sleep para el hilo de forma que cada cierto tiempo se
+	 * duerma,b·sicamente es por que tenga cierta similitud al correo de
+	 * gmail,recibes correo cada x tiempo. Se llama al ArrayList para poder limpiar
+	 * y borrar todos los datos,se hace esta llamada ya que al estar recibiendo
+	 * todos los correos volverÌa a aÒadir al ArrayList los correos antiguos y los
+	 * nuevos
+	 * 
+	 * @see datosCorreo
+	 * @see Correo
+	 */
+	public void run() {
 
-            } catch (Exception e) {
-                // TODO: handle exception
-                JOptionPane.showMessageDialog(null,
-                        "Ha habido un conflicto con el programa,si tiene un antivirus activado,desactivelo y vuelva a intentarlo",
-                        "ERROR", JOptionPane.ERROR_MESSAGE);
-                System.exit(0);
-            }
-            try {
-                Thread.sleep(3000);
-                Emails.listaDatos.clear();
-            } catch (InterruptedException e) {
-                // TODO Auto-generated catch block
-                System.out.println(e.getMessage());
-            }
-        }
+		while (true) {
+			try {
+				Message[] msg = Correo.recibirDatos();
+				Emails.lblMensajes.setText("Hay un total de " + String.valueOf(msg.length) + " mensajes");
+				/*
+				 * HAY QUE TENER CUIDADO CON EL ENVIO DE MENSAJES,ES DECIR,SI ESCRIBES UN
+				 * MENSAJE DE SALUDO A UNA PERSONA PREGUNTADOLE COMO ESTA , GOOGLE DIRECTAMENTE
+				 * TE DA UNA BOTONERA CON OPCIONES Y AL SER ESO HTML NO ESTA IMPLEMENTADO EN EL
+				 * PROGRAMA Y ESTAR¡ A LA ESPERA DE PODER LEER HTML
+				 */
+				for (int i = 0, n = msg.length; i < n; i++) {
+					Message mensaje = msg[i];
+					Emails.listaDatos.add(new datosCorreo(mensaje));
+				}
+				mostrarMensajes();
+			} catch (Exception e) {
+				// TODO: handle exception
+				JOptionPane.showMessageDialog(null,
+						"Ha habido un conflicto con el programa,si tiene un antivirus activado,desactivelo y vuelva a intentarlo",
+						"ERROR", JOptionPane.ERROR_MESSAGE);
+				System.exit(0);
+			}
+//			try {
+//				Thread.sleep(3000);
+//				Emails.listaDatos.clear();
+//			} catch (InterruptedException e) {
+//				// TODO Auto-generated catch block
+//				System.out.println(e.getMessage());
+//			}
+		}
+	}
 
-    }
+	/**
+	 * Metodo mostrarMensajes que su ˙nica funcionalidad es la de mostrar los
+	 * mensajes existentes que hay en el correo. Se crea los eventos de los botones
+	 * para poder recorrer los mensajes en orden de llegada. Se utiliza el try y
+	 * catch por si se d· el caso de que el usuario intentar leer mensajes que no
+	 * existe,es decir,si hay 5 mensajes y empieza viendo el primer mensaje y quiere
+	 * ver el mensaje anterior,como es negativo controlamos ese error mostr·ndole
+	 * que es un error y cerrar el programa.
+	 * 
+	 * @see Emails
+	 */
+	private void mostrarMensajes() {
+		try {
+			Emails.txt_origen.setText(Emails.listaDatos.get(Emails.contador).getOrigen());
+			Emails.txt_Asunto.setText(Emails.listaDatos.get(Emails.contador).getAsunto());
+			Emails.txt_mensaje.setText(Emails.listaDatos.get(Emails.contador).getMensaje());
+			Emails.btnAtras.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					try {
+						Emails.contador--;
+						Emails.txt_origen.setText(Emails.listaDatos.get(Emails.contador).getOrigen());
+						Emails.txt_Asunto.setText(Emails.listaDatos.get(Emails.contador).getAsunto());
+						Emails.txt_mensaje.setText(Emails.listaDatos.get(Emails.contador).getMensaje());
+					} catch (Exception e1) {
+						JOptionPane.showMessageDialog(null, "Error en el intento de leer mensajes", "ERROR",
+								JOptionPane.ERROR_MESSAGE);
+						System.exit(0);
+					}
+				}
+			});
+			Emails.btnAdelante.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					try {
+						Emails.contador++;
+						Emails.txt_origen.setText(Emails.listaDatos.get(Emails.contador).getOrigen());
+						Emails.txt_Asunto.setText(Emails.listaDatos.get(Emails.contador).getAsunto());
+						Emails.txt_mensaje.setText(Emails.listaDatos.get(Emails.contador).getMensaje());
+					} catch (Exception e1) {
+						JOptionPane.showMessageDialog(null, "No hay mas mensajes", "ERROR", JOptionPane.ERROR_MESSAGE);
+						System.exit(0);
+					}
+
+				}
+			});
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "No existen mensajes", "ERROR", JOptionPane.ERROR_MESSAGE);
+			System.exit(0);
+		}
+
+	}
 }

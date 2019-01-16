@@ -1,6 +1,7 @@
-package peval3Final;
+package peval3;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -11,10 +12,10 @@ public class datosCorreo {
 	private String Asunto, Origen, Mensaje;
 
 	/**
-	 * Constructor de la clase datosCorreo Recibe como par√°metro un Message al
-	 * cual,le indicamos que el asunto y el origen recibir√°n los datos de mensaje2.
-	 * Se un contenido para mensaje2,este contenido se para como par√°metro al m√©todo
-	 * obtenerTexto.Se realiza este m√©todo debido a que los mensajes que se envian
+	 * Constructor de la clase datosCorreo Recibe como par·metro un Message al
+	 * cual,le indicamos que el asunto y el origen recibir·n los datos de mensaje2.
+	 * Se un contenido para mensaje2,este contenido se para como par·metro al mÈtodo
+	 * obtenerTexto.Se realiza este mÈtodo debido a que los mensajes que se envian
 	 * pueden ser y que normalmente en la mayoria de casos lo son,de tipo
 	 * MimeMultipart,de forma que de manera normal no se puede leer el texto.
 	 * 
@@ -30,17 +31,17 @@ public class datosCorreo {
 	}
 
 	/**
-	 * m√©todo obtenerTexto. Este m√©todo compara si el texto es plano o de tipo
+	 * MÈtodo obtenerTexto. Este mÈtodo compara si el texto es plano o de tipo
 	 * multipart,si es de tipo texto plano,llama a setMensaje para pasarle como
-	 * par√°metro el contenido del texto del par√°metro del m√©todo pero si es
+	 * par·metro el contenido del texto del par·metro del mÈtodo pero si es
 	 * multipart se crea una instancia de la clase Multipart y se castea el
-	 * contenido del par√°metro del m√©todo. Se crea una variable integer para contar
+	 * contenido del par·metro del mÈtodo. Se crea una variable integer para contar
 	 * todo el contenido y se crea un for para poder recorrerlo,haciendo una llamada
-	 * recursiva al m√©todo pasandole como par√°metro la parte de texto del conteo que
+	 * recursiva al mÈtodo pasandole como par·metro la parte de texto del conteo que
 	 * lleve el for.De esta forma iremos desglosando el Multipart del mensaje y ya
 	 * si sera texto que se pueda leer y comprender.
 	 * 
-	 * @param parteTexto Recibe un Part como par√°metro
+	 * @param parteTexto Recibe un Part como par·metro
 	 * @throws MessagingException
 	 * @throws IOException
 	 */
